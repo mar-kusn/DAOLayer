@@ -9,9 +9,9 @@ public class MainDao {
         // test userDao.create(User)
         System.out.println("\n===== test userDao.create(User) =====");
         User user = new User();
-        user.setEmail("user8@gmail.com");
-        user.setUserName("user8");
-        user.setPassword("user8pass");
+        user.setEmail("user9@gmail.com");
+        user.setUserName("user9");
+        user.setPassword("user9pass");
         userDao.create(user);
         System.out.println(user.toString());
 /**/

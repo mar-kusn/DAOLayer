@@ -27,8 +27,7 @@ public class UserDao {
             "SELECT id, email, username, password FROM users";
 
     public String hashPassword(String password) {
-        //return BCrypt.hashpw(password, BCrypt.gensalt());
-        return password;
+        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
     // zapis nowego użytkownika do bazy,
@@ -108,7 +107,7 @@ public class UserDao {
                     conn.prepareStatement(UPDATE_USER_QUERY);
             statement.setString(1, user.getEmail());
             statement.setString(2, user.getUserName());
-            statement.setString(3, user.getPassword());
+            statement.setString(3, hashPassword(user.getPassword()));
             statement.setInt(4, user.getId());
             statement.executeUpdate();
         } catch (SQLException e) {

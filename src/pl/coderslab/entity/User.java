@@ -54,7 +54,7 @@ public class User {
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
+        //        ", password='" + password + '\'' +
                 '}';
     }
 }
