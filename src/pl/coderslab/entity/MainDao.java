@@ -2,7 +2,7 @@ package pl.coderslab.entity;
 
 import java.util.Arrays;
 
-public class MainDAO {
+public class MainDao {
     public static void main(String[] args) {
         UserDao userDao = new UserDao();
 
