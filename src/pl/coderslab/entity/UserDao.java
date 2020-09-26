@@ -2,12 +2,13 @@ package pl.coderslab.entity;
 
 import java.sql.*;
 import java.util.Arrays;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 public class UserDao {
     // zapytanie dodawania użytkownika
     private static final String CREATE_USER_QUERY =
-            "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
+            "INSERT INTO users(email, username, password) VALUES (?, ?, ?)";
 
     // zapytanie zmiany danych użytkownika
     private static final String UPDATE_USER_QUERY =
@@ -42,8 +43,8 @@ public class UserDao {
         try (Connection conn = DbUtil.getConnection()) {
             PreparedStatement statement =
                     conn.prepareStatement(CREATE_USER_QUERY, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, user.getUserName());
-            statement.setString(2, user.getEmail());
+            statement.setString(1, user.getEmail());
+            statement.setString(2, user.getUserName());
             statement.setString(3, hashPassword(user.getPassword()));
             statement.executeUpdate();
             //Pobieramy wstawiony do bazy identyfikator, a następnie ustawiamy id obiektu user.
@@ -52,6 +53,9 @@ public class UserDao {
                 user.setId(resultSet.getInt(1));
             }
             return user;
+        } catch (SQLIntegrityConstraintViolationException sqli) {
+            System.out.println(sqli.getMessage());
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -90,6 +94,7 @@ public class UserDao {
 
         return null;    // nie zanalazło takiego użytkownika
     }
+
     // edycja danych użytkownika
     public void update(User user) {
         /*
@@ -110,6 +115,7 @@ public class UserDao {
             e.printStackTrace();
         }
     }
+
     // usunięcia użytkownika
     public void delete(int userId) {
         /*
@@ -141,7 +147,7 @@ public class UserDao {
         try (Connection conn = DbUtil.getConnection()) {
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(READ_ALL_USERS_QUERY);
-            User [] allUsers = new User[0];    // tablica która będzie zawierała wszystkich użytkowników
+            User[] allUsers = new User[0];    // tablica która będzie zawierała wszystkich użytkowników
 
             while (resultSet.next()) {
                 // twozymy nowy obiekt który zostanie zwrócony
