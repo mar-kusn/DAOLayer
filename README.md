@@ -2,7 +2,7 @@
 DAOLayer is object-oriented data access layer
 
 ## Used things and skills
-This project use things and skills from module 2 Java OOP + MySQL like:
+This project use things and skills like:
 - classes,
 - objects,
 - reading data using SQL,
