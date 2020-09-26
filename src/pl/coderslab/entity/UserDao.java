@@ -1,7 +1,8 @@
 package pl.coderslab.entity;
 
 import java.sql.*;
-//import org.mindrot.jbcrypt.BCrypt;
+import java.util.Arrays;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class UserDao {
     // zapytanie dodawania użytkownika
@@ -21,7 +22,7 @@ public class UserDao {
             "DELETE FROM users WHERE id=?";
 
     // zapytanie pobierania wszystkich użytkowników
-    private static final String SHOW_ALL_USERS_QUERY =
+    private static final String READ_ALL_USERS_QUERY =
             "SELECT id, email, username, password FROM users";
 
     public String hashPassword(String password) {
@@ -136,6 +137,33 @@ public class UserDao {
             zwrócić tablicę obiektów
             Będziemy również potrzebować mechanizmu, który pozwoli nam automatycznie powiększać tablicę.
          */
-        return null;
+
+        try (Connection conn = DbUtil.getConnection()) {
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(READ_ALL_USERS_QUERY);
+            User [] allUsers = new User[0];    // tablica która będzie zawierała wszystkich użytkowników
+
+            while (resultSet.next()) {
+                // twozymy nowy obiekt który zostanie zwrócony
+                User user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setEmail(resultSet.getString("email"));
+                user.setUserName(resultSet.getString("username"));
+                user.setPassword(resultSet.getString("password"));
+                allUsers = addToArray(user, allUsers);
+            }
+            return allUsers;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
+
+    private User[] addToArray(User u, User[] users) {
+        User[] tmpUsers = Arrays.copyOf(users, users.length + 1); // Tworzymy kopię tablicy powiększoną o 1.
+        tmpUsers[users.length] = u; // Dodajemy obiekt na ostatniej pozycji.
+        return tmpUsers; // Zwracamy nową tablicę.
+    }
+
 }

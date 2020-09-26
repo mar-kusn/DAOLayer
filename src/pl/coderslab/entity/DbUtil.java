@@ -12,8 +12,6 @@ public class DbUtil {
     private static String DB_USER = "root";
     private static String DB_PASS = "coderslab";
 
-    private static final String DELETE_QUERY = "DELETE FROM tableName where id = ?";
-
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
     }

@@ -1,17 +1,19 @@
 package pl.coderslab.entity;
 
+import java.util.Arrays;
+
 public class MainDAO {
     public static void main(String[] args) {
         UserDao userDao = new UserDao();
-/*
+
 
         User user = new User();
-        user.setEmail("user3@gmail.com");
-        user.setUserName("user3");
-        user.setPassword("user3pass");
+        user.setEmail("user6@gmail.com");
+        user.setUserName("user6");
+        user.setPassword("user6pass");
         userDao.create(user);
         System.out.println(user.toString());
-*/
+/**/
 
         // test UserDao.read(id)
         User userToRead2 = userDao.read(2);
@@ -56,7 +58,7 @@ public class MainDAO {
         userToDelete.setPassword("userToDelete2Pass");
         userDao.create(userToDelete);
         System.out.println(userToDelete.toString());
-*/
+
         userDao.delete(6);
         User user6 = userDao.read(6);
         if (user6 != null) {
@@ -64,5 +66,15 @@ public class MainDAO {
         } else {
             System.out.println("Brak użytkownika o podanym id(6) w bazie!");
         }
+*/
+        User[] allUsers = userDao.findAll();
+        if (allUsers != null && allUsers.length != 0);
+        {
+            System.out.println("Lista wszystkich użytkowników");
+            for (User u : allUsers) {
+                System.out.println(u);
+            }
+        }
+
     }
 }
