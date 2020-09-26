@@ -1,10 +1,14 @@
-package pl.coderslab;
+package pl.coderslab.entity;
 
 public class User {
-    private int id;
+    private int id;             // 0 gdy nie został zapisany w DB (w DB primary key ma wartość 1...)
+                                // lub wartość klucza głównego odczytanego wiersza
     private String email;
     private String userName;
     private String password;
+
+    public User() {
+    }
 
     public User(String email, String userName, String password) {
         this.email = email;

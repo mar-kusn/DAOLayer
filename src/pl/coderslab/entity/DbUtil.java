@@ -1,5 +1,6 @@
-package pl.coderslab;
+package pl.coderslab.entity;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -13,7 +14,7 @@ public class DbUtil {
 
     private static final String DELETE_QUERY = "DELETE FROM tableName where id = ?";
 
-    public static Connection connect() throws SQLException {
+    public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
     }
 }
